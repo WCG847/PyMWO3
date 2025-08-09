@@ -22,6 +22,11 @@ class Overlay:
 if __name__ == '__main__':
 	o = Overlay('0000.mwo3')
 	if o:
-		print(f'{o.data.getvalue()}, {o.bss.getvalue()}')
+		print(f'{o.text}, {o.data.getvalue()}, {o.bss.getvalue()}')
 	else:
 		print('No file')
+	with open('YES.BIN', 'wb') as f:
+		f.write(o.text)
+		f.write(o.data.getvalue())
+		f.write(o.bss.getvalue())
+		
