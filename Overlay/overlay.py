@@ -1,9 +1,5 @@
-from struct import unpack, pack, pack_into, unpack_from
-from mmap import mmap
+from struct import unpack
 from io import BytesIO
-import ctypes
-from winnt import *
-
 
 
 class Overlay:
