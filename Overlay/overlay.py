@@ -12,7 +12,7 @@ class Overlay:
 				raise PermissionError(f'CANT EXECUTE OVERLAY MODULE {filename} ')
 			self.text = f.read(text_size)
 			self.data = BytesIO(f.read(data_size))
-			self.bss = BytesIO(f.read(bss_size))
+			self.bss = BytesIO(b'\x00' * bss_size)
 
 
 if __name__ == '__main__':
