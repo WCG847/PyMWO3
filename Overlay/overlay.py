@@ -1,4 +1,4 @@
-from struct import unpack
+from struct import unpack, pack
 from io import BytesIO
 
 
@@ -16,13 +16,26 @@ class Overlay:
 
 
 if __name__ == '__main__':
+	header = True
 	o = Overlay('0000.mwo3')
 	if o:
 		print(f'{o.text}, {o.data.getvalue()}, {o.bss.getvalue()}')
 	else:
 		print('No file')
 	with open(o.filename, 'wb') as f:
-		f.write(o.text)
-		f.write(o.data.getvalue())
-		f.write(o.bss.getvalue())
+		if header is True:
+			f.write(pack('4s', b'TEXT'))
+			f.write(b'\x00' * 12)
+			f.write(o.text)
+			f.write(pack('4s', b'DATA'))
+			f.write(b'\x00' * 12)
+			f.write(o.data.getvalue())
+			f.write(pack('4s', b'BSS'))
+			f.write(b'\x00' * 12)
+			f.write(o.bss.getvalue())
+		else:
+			f.write(o.text)
+			f.write(o.data.getvalue())
+			f.write(o.bss.getvalue())
+
 		
